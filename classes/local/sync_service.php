@@ -25,6 +25,7 @@
 namespace local_smssync\local;
 
 use local_smssync\local\dataprovider\courses_provider_interface;
+use local_smssync\local\dataprovider\user;
 use local_smssync\local\dataprovider\users_provider_interface;
 
 final class sync_service {
@@ -45,9 +46,29 @@ final class sync_service {
     }
 
     public function perform_synchronisation(): void {
-        $users = $this->usersprovider->fetch_users();
-        $courses = $this->coursesprovider->fetch_courses();
+        $externalusers = $this->usersprovider->fetch_users();
 
+        $externalusersidnumberarray = [];
+        foreach ($externalusers as $externaluser) {
+            $externalusersidnumberarray[] = $externaluser->id();
+        }
+        $existingusersidnumberarray = $this->get_id_number_of_existing_users($externalusersidnumberarray);
+
+        // TODO: implement the users sync logic.
+
+        $externalcourses = $this->coursesprovider->fetch_courses();
+        // TODO: implement the courses and enrolments sync logic.
+    }
+
+    /**
+     * The method tries to fetch all existing users provided array of their id number field. The returned array is to used to
+     * identify external users who already exist in the Moodle database.
+     * We use the id number field specifically as usually it's used to identify a user in the external systems.
+     *
+     * @param int[] $usersidarray An array of id numbers of users to synchronise.
+     * @return int[] An array of id numbers of users who already exist in Moodle.
+     */
+    private function get_id_number_of_existing_users(array $usersidarray): array {
 
     }
 }
