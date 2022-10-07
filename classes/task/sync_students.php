@@ -15,14 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for the English language used in the plugin.
+ * The task synchronises users, courses and enrolments from external API to Moodle.
  *
  * @package   local_smssync
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace local_smssync\task;
 
-$string['pluginname'] = 'SMS (Student Management System) Integration';
-$string['syncronisetaskname'] = 'Syncronising Students';
+use core\task\scheduled_task;
+
+class sync_students extends scheduled_task
+{
+
+    /**
+     * @inheritDoc
+     */
+    public function get_name()
+    {
+        return get_string('syncronisetaskname', 'local_smssync');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function execute()
+    {
+        // TODO: Implement execute() method.
+    }
+}

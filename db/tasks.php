@@ -15,14 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for the English language used in the plugin.
+ * Plugin's tasks definition.
  *
  * @package   local_smssync
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$string['pluginname'] = 'SMS (Student Management System) Integration';
-$string['syncronisetaskname'] = 'Syncronising Students';
+$tasks = [
+    [
+        'classname' => 'local_smssync\task\sync_students',
+        'blocking' => 0,
+        'minute' => '0',
+        'hour' => '0',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+        'disabled' => false,
+    ],
+];
