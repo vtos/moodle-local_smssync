@@ -29,8 +29,14 @@ use local_smssync\local\dataprovider\users_provider_interface;
 
 final class sync_service {
 
+    /**
+     * @var users_provider_interface $usersprovider
+     */
     private $usersprovider;
 
+    /**
+     * @var courses_provider_interface $coursesprovider
+     */
     private $coursesprovider;
 
     public function __construct(users_provider_interface $usersprovider, courses_provider_interface $coursesprovider) {
@@ -38,7 +44,7 @@ final class sync_service {
         $this->coursesprovider = $coursesprovider;
     }
 
-    public function sync(): void {
+    public function perform_synchronisation(): void {
         $users = $this->usersprovider->fetch_users();
         $courses = $this->coursesprovider->fetch_courses();
 

@@ -57,4 +57,11 @@ final class configuration {
     public function token(): string {
         return $this->token;
     }
+
+    /**
+     * A named constructor to make instantiating a bit less verbose.
+     */
+    public static function create_from_strings(string $url, string $token): self {
+        return new self($url, $token);
+    }
 }

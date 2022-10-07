@@ -25,23 +25,43 @@
 namespace local_smssync\task;
 
 use core\task\scheduled_task;
+use Exception;
+use local_smssync\local\dataprovider\configuration;
+use local_smssync\local\dataprovider\courses_provider;
+use local_smssync\local\dataprovider\users_provider;
+use local_smssync\local\sync_service;
 
-class sync_students extends scheduled_task
-{
+class sync_students extends scheduled_task {
+
+    // TODO: move these constants out of here (for example, into the plugin's settings).
+    private const BASE_URL = '';
+
+    private const USERS_ENDPOINT = '';
+
+    private const COURSES_ENDPOINT = '';
+
+    private const TOKEN = '';
 
     /**
      * @inheritDoc
      */
-    public function get_name()
-    {
+    public function get_name() {
         return get_string('syncronisetaskname', 'local_smssync');
     }
 
     /**
      * @inheritDoc
      */
-    public function execute()
-    {
-        // TODO: Implement execute() method.
+    public function execute() {
+        $sync = new sync_service(
+            new users_provider(configuration::create_from_strings(self::BASE_URL . self::USERS_ENDPOINT, self::TOKEN)),
+            new courses_provider(configuration::create_from_strings(self::BASE_URL . self::COURSES_ENDPOINT, self::TOKEN))
+        );
+
+        try {
+            $sync->perform_synchronisation();
+        } catch (Exception $e) {
+            mtrace("An error occurred: " . $e->getMessage());
+        }
     }
 }
