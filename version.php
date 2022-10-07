@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022070700;
+$plugin->version   = 2022070701;
 $plugin->requires  = 2022041200;
 $plugin->component = 'local_smssync';
